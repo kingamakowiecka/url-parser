@@ -1,5 +1,6 @@
 import com.tangled.web.url.UrlParser
 import com.tangled.web.url.UserCredentials
+import com.tangled.web.url.domain.InvalidDomainException
 import com.tangled.web.url.param.InvalidParamException
 import com.tangled.web.url.protocol.InvalidProtocolException
 import spock.lang.Specification
@@ -96,6 +97,24 @@ class UrlParserTest extends Specification {
         "http://user:pass@example.com#text" || "example.com" || USER_CREDENTIALS
         "http://user:pass@example.com"      || "example.com" || USER_CREDENTIALS
         "user:pass@example.com"             || "example.com" || USER_CREDENTIALS
+    }
+
+    def "Throws InvalidDomainException when domain is invalid in #url"() {
+        given:
+        def parser = new UrlParser(url)
+
+        when:
+        parser.parseUrl()
+
+        then:
+        thrown InvalidDomainException
+
+        where:
+        url                 || _
+        "http://"           || _
+        "http://fakedomain" || _
+        "?param=1"          || _
+        "http://?param=1"   || _
     }
 
     def "Url #url has properly parsed query params (#params)"() {

@@ -3,6 +3,7 @@ package com.tangled.web.url;
 import java.io.IOException;
 
 import com.tangled.web.url.domain.DomainNameParser;
+import com.tangled.web.url.domain.InvalidDomainException;
 import com.tangled.web.url.domain.UserCredentialsParser;
 import com.tangled.web.url.param.InvalidParamException;
 import com.tangled.web.url.param.ParamParser;
@@ -16,7 +17,7 @@ public class UrlParser {
         this.url = url;
     }
 
-    public UrlSegments parseUrl() throws IOException, InvalidProtocolException, InvalidParamException {
+    public UrlSegments parseUrl() throws IOException, InvalidProtocolException, InvalidParamException, InvalidDomainException {
         return UrlSegments.builder()
                 .protocol(ProtocolParser.parse(url))
                 .credentials(UserCredentialsParser.parseUserCredentials(url))

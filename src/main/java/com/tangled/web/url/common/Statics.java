@@ -12,4 +12,5 @@ public class Statics {
     public static final String CREDENTIALS_SEPARATOR = ":";
     public static final String PARAMS_VALUE_SEPARATOR = "=";
     public static final String PARAMS_SEPARATOR = "&";
+    public static final String DOMAIN_NAME_SEPARATOR = ".";
 }
