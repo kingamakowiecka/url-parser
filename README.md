@@ -1,7 +1,7 @@
 # Url Parser
 A very simple application created just for fun and a small java practice.
 
-Inspired by book ["The Tangled Web: A Guide to Securing Modern Web 
+Inspired by Chapter 2 from book ["The Tangled Web: A Guide to Securing Modern Web 
 Applications"](https://www.amazon.com/Tangled-Web-Securing-Modern-Applications/dp/1593273886) 
 
 ## Prerequisites
