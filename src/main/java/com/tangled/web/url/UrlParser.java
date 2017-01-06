@@ -2,7 +2,9 @@ package com.tangled.web.url;
 
 import java.io.IOException;
 
-import com.tangled.web.exception.InvalidProtocolException;
+import com.tangled.web.url.domain.DomainNameParser;
+import com.tangled.web.url.domain.UserCredentialsParser;
+import com.tangled.web.url.protocol.InvalidProtocolException;
 import com.tangled.web.url.protocol.ProtocolParser;
 
 public class UrlParser {
@@ -13,6 +15,10 @@ public class UrlParser {
     }
 
     public UrlSegments parseUrl() throws IOException, InvalidProtocolException {
-        return UrlSegments.builder().protocol(ProtocolParser.parse(url)).domain("test").build();
+        return UrlSegments.builder()
+                .protocol(ProtocolParser.parse(url))
+                .credentials(UserCredentialsParser.parseUserCredentials(url))
+                .domain(DomainNameParser.parseDomainName(url))
+                .build();
     }
 }

@@ -8,4 +8,5 @@ import lombok.Data;
 public class UrlSegments {
     private String protocol;
     private String domain;
+    private UserCredentials credentials;
 }
