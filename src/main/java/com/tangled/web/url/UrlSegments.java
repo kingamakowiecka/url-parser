@@ -12,4 +12,5 @@ public class UrlSegments {
     private String domain;
     private UserCredentials credentials;
     private Map<String, String> params;
+    private String path;
 }

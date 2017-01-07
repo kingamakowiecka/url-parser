@@ -21,9 +21,10 @@ class UrlParserTest extends Specification {
 
     def "Url #url parser smoke test"() {
         given:
-        def url = "http://user:pass@example.com?first_param=p&second_param=p2"
+        def url = "http://user:pass@example.com/path?first_param=p&second_param=p2"
         def protocol = "http"
         def domain = "example.com"
+        def path = "path"
 
         def parser = new UrlParser(url)
 
@@ -35,6 +36,7 @@ class UrlParserTest extends Specification {
         urlSegments.domain == domain
         urlSegments.credentials == USER_CREDENTIALS
         urlSegments.params == PARAMS_MAP
+        urlSegments.path == path
     }
 
     def "Url #url has properly parsed protocol (#protocol)"() {
@@ -133,6 +135,7 @@ class UrlParserTest extends Specification {
         "example.com?first_param=p&second_param=p2"             || PARAMS_MAP
         "http://example.com?first_param=p&second_param=p2#text" || PARAMS_MAP
         "http://example.com/test?first_param=p&second_param=p2" || PARAMS_MAP
+        "http://example.com/test"                               || null
     }
 
     def "Throws InvalidParamException when params list is invalid in #url"() {
@@ -145,5 +148,23 @@ class UrlParserTest extends Specification {
 
         then:
         thrown InvalidParamException
+    }
+
+    def "Url #url has properly parsed path (#path)"() {
+        given:
+        def parser = new UrlParser(url)
+
+        when:
+        def urlSegments = parser.parseUrl()
+
+        then:
+        urlSegments.path == path
+
+        where:
+        url                                                     || path
+        "http://example.com/path?first_param=p&second_param=p2" || "path"
+        "http://example.com/path/"                              || "path"
+        "http://example.com/path/path2?param=p"                 || "path/path2"
+        "http://example.com?param=p"                            || null
     }
 }

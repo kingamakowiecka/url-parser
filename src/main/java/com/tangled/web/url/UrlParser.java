@@ -7,6 +7,7 @@ import com.tangled.web.url.domain.InvalidDomainException;
 import com.tangled.web.url.domain.UserCredentialsParser;
 import com.tangled.web.url.param.InvalidParamException;
 import com.tangled.web.url.param.ParamParser;
+import com.tangled.web.url.path.PathParser;
 import com.tangled.web.url.protocol.InvalidProtocolException;
 import com.tangled.web.url.protocol.ProtocolParser;
 
@@ -22,6 +23,7 @@ public class UrlParser {
                 .protocol(ProtocolParser.parse(url))
                 .credentials(UserCredentialsParser.parseUserCredentials(url))
                 .domain(DomainNameParser.parseDomainName(url))
+                .path(PathParser.parse(url))
                 .params(ParamParser.parse(url))
                 .build();
     }
