@@ -11,7 +11,7 @@ class DomainNameParserTest extends Specification {
         DOMAIN_NAME_PARSER = new DomainNameParser()
     }
 
-    def "Url #url has properly parsed domain (#domain) with optionals credentials"() {
+    def "Url #url has properly parsed domain (#domain)"() {
         when:
         def parsedDomain = DOMAIN_NAME_PARSER
                 .withProtocolSegmentLength(protocolLength)

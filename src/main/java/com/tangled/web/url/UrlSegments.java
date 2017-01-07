@@ -11,6 +11,7 @@ public class UrlSegments {
     private String protocol;
     private String domain;
     private UserCredentials credentials;
-    private Map<String, String> params;
     private String path;
+    private Map<String, String> params;
+    private String anchor;
 }

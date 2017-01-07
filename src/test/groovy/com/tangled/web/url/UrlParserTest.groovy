@@ -1,5 +1,6 @@
 package com.tangled.web.url
 
+import com.tangled.web.url.anchor.AnchorParser
 import com.tangled.web.url.domain.DomainNameParser
 import com.tangled.web.url.domain.UserCredentialsParser
 import com.tangled.web.url.param.ParamParser
@@ -20,15 +21,17 @@ class UrlParserTest extends Specification {
         PARAMS_MAP = new HashMap()
         PARAMS_MAP.put("first_param", "p")
         PARAMS_MAP.put("second_param", "p2")
-        URL_PARSER = new UrlParser(new ProtocolParser(), new UserCredentialsParser(), new DomainNameParser(), new PathParser(), new ParamParser())
+        URL_PARSER = new UrlParser(new ProtocolParser(), new UserCredentialsParser(), new DomainNameParser(),
+                new PathParser(), new ParamParser(), new AnchorParser())
     }
 
-    def "Url #url parser smoke test"() {
+    def "Url parser smoke test"() {
         given:
-        def url = "http://user:pass@example.com/path?first_param=p&second_param=p2"
+        def url = "http://user:pass@example.com/path?first_param=p&second_param=p2#anchor_text"
         def protocol = "http"
         def domain = "example.com"
         def path = "path"
+        def anchor = "anchor_text"
 
         when:
         def urlSegments = URL_PARSER.parseUrl(url)
@@ -39,5 +42,6 @@ class UrlParserTest extends Specification {
         urlSegments.credentials == USER_CREDENTIALS
         urlSegments.params == PARAMS_MAP
         urlSegments.path == path
+        urlSegments.anchor == anchor
     }
 }

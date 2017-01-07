@@ -1,8 +1,12 @@
 # Url Parser
 A very simple application created just for fun and a small java practice.
 
-Inspired by Chapter 2 from book ["The Tangled Web: A Guide to Securing Modern Web 
+Inspired by the url parsing algorithm described in Chapter 2 of book ["The Tangled Web: A Guide to Securing Modern Web 
 Applications"](https://www.amazon.com/Tangled-Web-Securing-Modern-Applications/dp/1593273886) 
+
+To run application just run App.java.
+
+For more details and edge cases please look at spock tests.
 
 ## Prerequisites
 
