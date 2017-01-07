@@ -1,4 +1,6 @@
 package com.tangled.web.url.domain;
 
-public class InvalidDomainException extends Exception {
+import com.tangled.web.url.common.InvalidUrlException;
+
+public class InvalidDomainException extends InvalidUrlException {
 }

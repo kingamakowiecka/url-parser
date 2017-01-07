@@ -1,18 +1,13 @@
 package com.tangled.web.url.param;
 
-import static com.tangled.web.url.common.Statics.ANCHOR_SYMBOL;
-import static com.tangled.web.url.common.Statics.PARAMS_SEPARATOR;
-import static com.tangled.web.url.common.Statics.PARAMS_VALUE_SEPARATOR;
-import static com.tangled.web.url.common.Statics.QUERY_PARAM_SYMBOL;
-import static com.tangled.web.url.common.SymbolIndexHelper.getIndex;
-
 import java.util.Map;
 
 import com.google.common.base.Splitter;
+import com.tangled.web.url.common.AbstractParser;
 
-public class ParamParser {
+public class ParamParser extends AbstractParser {
 
-    public static Map<String, String> parse(String url) throws InvalidParamException {
+    public Map<String, String> parse(String url) throws InvalidParamException {
         try {
             String queryParams = getQueryParamsString(url, getQueryParamIndex(url), getAnchorIndex(url));
             return getParamsMap(queryParams);
@@ -21,7 +16,7 @@ public class ParamParser {
         }
     }
 
-    private static Map<String, String> getParamsMap(String queryParams) throws InvalidParamException {
+    private Map<String, String> getParamsMap(String queryParams) throws InvalidParamException {
         try {
             Map<String, String> paramsMap = Splitter.on(PARAMS_SEPARATOR)
                     .withKeyValueSeparator(PARAMS_VALUE_SEPARATOR)
@@ -32,18 +27,18 @@ public class ParamParser {
         }
     }
 
-    private static int getAnchorIndex(String url) {
+    private int getAnchorIndex(String url) {
         return getIndex(url, ANCHOR_SYMBOL);
     }
 
-    private static String getQueryParamsString(String url, int queryParamIndex, int anchorIndex) {
+    private String getQueryParamsString(String url, int queryParamIndex, int anchorIndex) {
         int queryParamsIndexWithoutQuestionMark = queryParamIndex + 1;
         return anchorIndex != -1 ?
                 url.substring(queryParamsIndexWithoutQuestionMark, anchorIndex) :
                 url.substring(queryParamsIndexWithoutQuestionMark);
     }
 
-    private static int getQueryParamIndex(String url) throws EmptyParamException {
+    private int getQueryParamIndex(String url) throws EmptyParamException {
         int queryParamIndex = getIndex(url, QUERY_PARAM_SYMBOL);
         if (queryParamIndex == -1) {
             throw new EmptyParamException();

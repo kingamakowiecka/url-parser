@@ -1,4 +1,6 @@
 package com.tangled.web.url.protocol;
 
-public class EmptyProtocolException extends Exception {
+import com.tangled.web.url.common.InvalidUrlException;
+
+public class EmptyProtocolException extends InvalidUrlException {
 }

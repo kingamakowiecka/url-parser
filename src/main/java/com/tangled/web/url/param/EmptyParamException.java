@@ -1,4 +1,6 @@
 package com.tangled.web.url.param;
 
-public class EmptyParamException extends Exception {
+import com.tangled.web.url.common.InvalidUrlException;
+
+public class EmptyParamException extends InvalidUrlException {
 }

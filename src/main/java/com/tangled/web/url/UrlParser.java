@@ -2,29 +2,46 @@ package com.tangled.web.url;
 
 import java.io.IOException;
 
+import com.tangled.web.url.common.InvalidUrlException;
 import com.tangled.web.url.domain.DomainNameParser;
-import com.tangled.web.url.domain.InvalidDomainException;
 import com.tangled.web.url.domain.UserCredentialsParser;
 import com.tangled.web.url.param.InvalidParamException;
 import com.tangled.web.url.param.ParamParser;
 import com.tangled.web.url.path.PathParser;
-import com.tangled.web.url.protocol.InvalidProtocolException;
 import com.tangled.web.url.protocol.ProtocolParser;
 
 public class UrlParser {
-    private String url;
+    private ProtocolParser protocolParser;
+    private UserCredentialsParser userCredentialsParser;
+    private DomainNameParser domainNameParser;
+    private PathParser pathParser;
+    private ParamParser paramParser;
 
-    public UrlParser(String url) {
-        this.url = url;
+    public UrlParser(ProtocolParser protocolParser, UserCredentialsParser userCredentialsParser, DomainNameParser domainNameParser, PathParser pathParser, ParamParser paramParser) {
+        this.protocolParser = protocolParser;
+        this.userCredentialsParser = userCredentialsParser;
+        this.domainNameParser = domainNameParser;
+        this.pathParser = pathParser;
+        this.paramParser = paramParser;
     }
 
-    public UrlSegments parseUrl() throws IOException, InvalidProtocolException, InvalidParamException, InvalidDomainException {
+    public UrlSegments parseUrl(String url) throws IOException, InvalidUrlException, InvalidParamException {
+        String protocol = protocolParser.parse(url);
+        int protocolSegmentLength = protocolParser.getProtocolSegmentLength(protocol);
+        int credentialsSegmentLength = userCredentialsParser.getCredentialsSegmentLength(url, protocolSegmentLength);
         return UrlSegments.builder()
-                .protocol(ProtocolParser.parse(url))
-                .credentials(UserCredentialsParser.parseUserCredentials(url))
-                .domain(DomainNameParser.parseDomainName(url))
-                .path(PathParser.parse(url))
-                .params(ParamParser.parse(url))
+                .protocol(protocol)
+                .credentials(userCredentialsParser
+                        .withProtocolSegmentLength(protocolSegmentLength)
+                        .parse(url))
+                .domain(domainNameParser
+                        .withProtocolSegmentLength(protocolSegmentLength)
+                        .withCredentialsSegmentLength(credentialsSegmentLength)
+                        .parse(url))
+                .path(pathParser
+                        .withProtocolSegmentLength(protocolSegmentLength)
+                        .parse(url))
+                .params(paramParser.parse(url))
                 .build();
     }
 }
