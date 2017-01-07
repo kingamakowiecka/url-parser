@@ -28,7 +28,7 @@ public class ParamParser extends AbstractParser {
     }
 
     private int getAnchorIndex(String url) {
-        return getIndex(url, ANCHOR_SYMBOL);
+        return url.indexOf(ANCHOR_SYMBOL);
     }
 
     private String getQueryParamsString(String url, int queryParamIndex, int anchorIndex) {
@@ -39,7 +39,7 @@ public class ParamParser extends AbstractParser {
     }
 
     private int getQueryParamIndex(String url) throws EmptyParamException {
-        int queryParamIndex = getIndex(url, QUERY_PARAM_SYMBOL);
+        int queryParamIndex = url.indexOf(QUERY_PARAM_SYMBOL);
         if (queryParamIndex == -1) {
             throw new EmptyParamException();
         }

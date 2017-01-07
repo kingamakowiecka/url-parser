@@ -34,7 +34,7 @@ public class ProtocolParser extends AbstractParser {
     }
 
     private int getUrlColonIndex(String url) throws EmptyProtocolException {
-        int colonIndex = getIndex(url, PROTOCOL_COLON);
+        int colonIndex = url.indexOf(PROTOCOL_COLON);
 
         if (colonIndex == -1) {
             throw new EmptyProtocolException();
@@ -44,9 +44,9 @@ public class ProtocolParser extends AbstractParser {
     }
 
     private void verifyEmptyProtocolAndUserCredentials(String url, int urlColonIndex) throws EmptyProtocolException {
-        int credentialsSymbolIndex = getIndex(url, CREDENTIALS_SYMBOL);
+        int credentialsSymbolIndex = url.indexOf(CREDENTIALS_SYMBOL);
 
-        if (credentialsSymbolIndex != -1 && credentialsSymbolIndex > getIndex(url, PROTOCOL_COLON, urlColonIndex)) {
+        if (credentialsSymbolIndex != -1 && credentialsSymbolIndex > url.indexOf(PROTOCOL_COLON, urlColonIndex)) {
             throw new EmptyProtocolException();
         }
     }

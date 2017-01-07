@@ -41,8 +41,13 @@ public class DomainNameParser extends AbstractParser {
     }
 
     private int getDomainNameIndexTo(String url, int indexFrom) {
-        int nextIndexAfterDomainBeginningSymbol = indexFrom + 1;
-        return getIndexOfDomainEndingSymbol(url, nextIndexAfterDomainBeginningSymbol);
+        int endOfDomainIndex = url.indexOf(END_OF_DOMAIN_SYMBOL, indexFrom);
+        if (endOfDomainIndex != -1) {
+            return endOfDomainIndex;
+        } else {
+            int nextIndexAfterDomainBeginningSymbol = indexFrom + 1;
+            return getIndexOfAnchorOrParamsSymbol(url, nextIndexAfterDomainBeginningSymbol);
+        }
     }
 
     private int getWwwSegmentLength(String url, int index) throws InvalidDomainException {

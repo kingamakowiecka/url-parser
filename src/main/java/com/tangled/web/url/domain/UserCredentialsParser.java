@@ -11,7 +11,7 @@ public class UserCredentialsParser extends AbstractParser {
 
     public UserCredentials parse(String url) throws IOException, InvalidProtocolException {
         int credentialsIndexFrom = protocolSegmentLength;
-        int credentialsIndexTo = getIndex(url, CREDENTIALS_SYMBOL, credentialsIndexFrom);
+        int credentialsIndexTo = url.indexOf(CREDENTIALS_SYMBOL, credentialsIndexFrom);
 
         if (credentialsIndexTo > credentialsIndexFrom) {
             return buildUserCredentials(url, credentialsIndexFrom, credentialsIndexTo);

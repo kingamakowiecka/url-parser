@@ -30,7 +30,7 @@ public abstract class AbstractParser {
     }
 
     public int getCredentialsSegmentLength(String url, int credentialsIndexFrom) {
-        int credentialsSymbolIndex = getIndex(url, CREDENTIALS_SYMBOL, credentialsIndexFrom);
+        int credentialsSymbolIndex = url.indexOf(CREDENTIALS_SYMBOL, credentialsIndexFrom);
         if (credentialsSymbolIndex != -1) {
             return url.substring(credentialsIndexFrom, credentialsSymbolIndex + 1).length();
         }
@@ -38,27 +38,16 @@ public abstract class AbstractParser {
         return -1;
     }
 
-    protected int getIndexOfDomainEndingSymbol(String url, int indexFrom) {
-        int endOfDomainIndex = getIndex(url, END_OF_DOMAIN_SYMBOL, indexFrom);
-        int queryParamIndex = getIndex(url, QUERY_PARAM_SYMBOL, indexFrom);
-        int anchorIndex = getIndex(url, ANCHOR_SYMBOL, indexFrom);
+    protected int getIndexOfAnchorOrParamsSymbol(String url, int indexFrom) {
+        int queryParamIndex = url.indexOf(QUERY_PARAM_SYMBOL, indexFrom);
+        int anchorIndex = url.indexOf(ANCHOR_SYMBOL, indexFrom);
 
-        if (endOfDomainIndex != -1) {
-            return endOfDomainIndex;
-        } else if (queryParamIndex != -1) {
+        if (queryParamIndex != -1) {
             return queryParamIndex;
         } else if (anchorIndex != -1) {
             return anchorIndex;
         }
 
         return -1;
-    }
-
-    public int getIndex(String url, String symbol) {
-        return url.indexOf(symbol);
-    }
-
-    public int getIndex(String url, String symbol, int indexFrom) {
-        return url.indexOf(symbol, indexFrom);
     }
 }

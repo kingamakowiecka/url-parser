@@ -9,18 +9,23 @@ public class PathParser extends AbstractParser {
     private int protocolSegmentLength;
 
     public String parse(String url) throws IOException, InvalidProtocolException {
-        int pathIndexFrom = getIndex(url, END_OF_DOMAIN_SYMBOL, protocolSegmentLength);
-        int pathIndexTo = getPathIndexTo(url, pathIndexFrom);
+        int pathIndexFrom = url.indexOf(END_OF_DOMAIN_SYMBOL, protocolSegmentLength);
 
-        if (pathIndexFrom == -1) {
+        if (pathIndexFrom == -1 || pathIndexFrom == getLastUrlIndexNumber(url)) {
             return null;
         }
 
+        return getPath(url, pathIndexFrom);
+    }
+
+    private String getPath(String url, int pathIndexFrom) {
+        int pathIndexTo = getPathIndexTo(url, pathIndexFrom);
         int pathIndexFromWithoutPathSymbol = pathIndexFrom + 1;
 
-        return pathIndexTo != -1 || pathIndexFrom == pathIndexTo ?
-                url.substring(pathIndexFromWithoutPathSymbol, pathIndexTo)
-                : url.substring(pathIndexFromWithoutPathSymbol);
+        if (pathIndexTo == -1 || pathIndexFrom == pathIndexTo) {
+            pathIndexTo = getLastUrlIndexNumber(url);
+        }
+        return url.substring(pathIndexFromWithoutPathSymbol, pathIndexTo);
     }
 
     public PathParser withProtocolSegmentLength(int protocolSegmentLength) {
@@ -30,6 +35,16 @@ public class PathParser extends AbstractParser {
 
     private int getPathIndexTo(String url, int indexFrom) {
         int nextIndexAfterPathBeginningSymbol = indexFrom + 1;
-        return getIndexOfDomainEndingSymbol(url, nextIndexAfterPathBeginningSymbol);
+        int indexOfAnchorOrParamsSymbol = getIndexOfAnchorOrParamsSymbol(url, nextIndexAfterPathBeginningSymbol);
+
+        if (indexOfAnchorOrParamsSymbol == -1) {
+            return url.lastIndexOf(END_OF_DOMAIN_SYMBOL, indexFrom);
+        }
+
+        return indexOfAnchorOrParamsSymbol;
+    }
+
+    private int getLastUrlIndexNumber(String url) {
+        return url.length() - 1;
     }
 }
