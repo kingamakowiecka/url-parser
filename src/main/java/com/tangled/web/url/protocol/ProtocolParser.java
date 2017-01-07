@@ -4,8 +4,9 @@ import java.io.IOException;
 
 import com.tangled.web.url.common.AbstractParser;
 
-public class ProtocolParser extends AbstractParser {
+public class ProtocolParser extends AbstractParser<String> {
 
+    @Override
     public String parse(String url) throws IOException, InvalidProtocolException {
         try {
             return getUrlProtocol(url);

@@ -5,9 +5,10 @@ import java.io.IOException;
 import com.tangled.web.url.common.AbstractParser;
 import com.tangled.web.url.protocol.InvalidProtocolException;
 
-public class PathParser extends AbstractParser {
+public class PathParser extends AbstractParser<String> {
     private int protocolSegmentLength;
 
+    @Override
     public String parse(String url) throws IOException, InvalidProtocolException {
         int pathIndexFrom = url.indexOf(END_OF_DOMAIN_SYMBOL, protocolSegmentLength);
 

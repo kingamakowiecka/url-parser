@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.google.common.base.Strings;
 
-public abstract class AbstractParser {
+public abstract class AbstractParser<T> {
     public static final String PROTOCOL_SLASHES = "//";
     public static final String PROTOCOL_COLON = ":";
     public static final String WWW = "www";
@@ -18,9 +18,9 @@ public abstract class AbstractParser {
     public static final String PARAMS_SEPARATOR = "&";
     public static final String DOMAIN_NAME_SEPARATOR = ".";
 
-    public abstract <T> T parse(String url) throws IOException, InvalidUrlException;
+    public abstract T parse(String url) throws IOException, InvalidUrlException;
 
-    public int getProtocolSegmentLength(String protocol) throws IOException, InvalidUrlException {
+    public int getProtocolSegmentLength(String protocol) throws InvalidUrlException {
         int protocolLength = 0;
 
         if (!Strings.isNullOrEmpty(protocol)) {

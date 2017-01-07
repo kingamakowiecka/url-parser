@@ -13,7 +13,7 @@ import com.tangled.web.url.path.PathParser;
 import com.tangled.web.url.protocol.ProtocolParser;
 
 public class App {
-    public static final String URL = "http://example.com/test_path?param=123&next_param=456#just_simpleText";
+    private static final String URL = "http://example.com/test_path?param=123&next_param=456#just_simpleText";
 
     public static void main(String[] args) throws IOException, InvalidUrlException {
         ProtocolParser protocolParser = new ProtocolParser();

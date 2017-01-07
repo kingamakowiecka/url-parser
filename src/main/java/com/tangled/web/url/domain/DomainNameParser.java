@@ -5,10 +5,11 @@ import java.io.IOException;
 import com.tangled.web.url.common.AbstractParser;
 import com.tangled.web.url.protocol.InvalidProtocolException;
 
-public class DomainNameParser extends AbstractParser {
+public class DomainNameParser extends AbstractParser<String> {
     private int protocolSegmentLength;
     private int credentialSegmentLength;
 
+    @Override
     public String parse(String url) throws IOException, InvalidDomainException, InvalidProtocolException {
         int indexFrom = getDomainNameIndexFrom(url);
         int indexTo = getDomainNameIndexTo(url, indexFrom);

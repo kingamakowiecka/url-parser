@@ -5,8 +5,9 @@ import java.util.Map;
 import com.google.common.base.Splitter;
 import com.tangled.web.url.common.AbstractParser;
 
-public class ParamParser extends AbstractParser {
+public class ParamParser extends AbstractParser<Map<String, String>> {
 
+    @Override
     public Map<String, String> parse(String url) throws InvalidParamException {
         try {
             String queryParams = getQueryParamsString(url, getQueryParamIndex(url), getAnchorIndex(url));
@@ -18,10 +19,9 @@ public class ParamParser extends AbstractParser {
 
     private Map<String, String> getParamsMap(String queryParams) throws InvalidParamException {
         try {
-            Map<String, String> paramsMap = Splitter.on(PARAMS_SEPARATOR)
+            return Splitter.on(PARAMS_SEPARATOR)
                     .withKeyValueSeparator(PARAMS_VALUE_SEPARATOR)
                     .split(queryParams);
-            return paramsMap;
         } catch (IllegalArgumentException ex) {
             throw new InvalidParamException();
         }

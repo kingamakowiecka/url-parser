@@ -6,9 +6,10 @@ import com.tangled.web.url.UserCredentials;
 import com.tangled.web.url.common.AbstractParser;
 import com.tangled.web.url.protocol.InvalidProtocolException;
 
-public class UserCredentialsParser extends AbstractParser {
+public class UserCredentialsParser extends AbstractParser<UserCredentials> {
     private int protocolSegmentLength;
 
+    @Override
     public UserCredentials parse(String url) throws IOException, InvalidProtocolException {
         int credentialsIndexFrom = protocolSegmentLength;
         int credentialsIndexTo = url.indexOf(CREDENTIALS_SYMBOL, credentialsIndexFrom);
