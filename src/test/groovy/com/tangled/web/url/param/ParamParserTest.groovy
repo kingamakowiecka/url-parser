@@ -34,7 +34,7 @@ class ParamParserTest extends Specification {
 
     def "Throws InvalidParamException when params list is invalid in #url"() {
         given:
-        def url = "http://example.com/test?first_param&second_param=p";
+        def url = "http://example.com/test?first_param&second_param=p"
 
         when:
         PARAM_PARSER.parse(url)

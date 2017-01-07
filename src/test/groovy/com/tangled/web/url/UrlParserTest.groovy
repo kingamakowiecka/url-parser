@@ -11,7 +11,7 @@ import spock.lang.Unroll
 
 @Unroll
 class UrlParserTest extends Specification {
-    def static USER_CREDENTIALS;
+    def static USER_CREDENTIALS
     def static PARAMS_MAP
     def static URL_PARSER
 
